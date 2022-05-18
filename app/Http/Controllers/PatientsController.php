@@ -18,8 +18,9 @@ class PatientsController extends Controller
     {
         // Patientモデルを使って全利用者を昇順で取得
         $patients = Patient::orderBy('id', 'asc')->paginate(10);
+        $keyword = '';
         // viewの呼び出し
-        return view('top', compact('patients'));
+        return view('top', compact('patients', 'keyword'));
     }
 
     /**
@@ -174,6 +175,7 @@ class PatientsController extends Controller
      */
     public function edit(Patient $patient)
     {
+        
         // view の呼び出し
         // 職員全員が利用者の登録情報の編集ができるようにするため条件分岐はしない
         return view('patients.edit', compact('patient'));
@@ -329,7 +331,9 @@ class PatientsController extends Controller
         $flash_message = '検索キーワード: 『' . $keyword . '』に' . $patients->count() . '件ヒットしました';
         
         // view の呼び出し
-        return view('top', compact('patients', 'flash_message'));
+        // session(['flash_message' => $flash_message]);
+        return view('top', compact('patients', 'keyword', 'flash_message'));
+        
     }
 
 }
